@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-accent="purple">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aurora OS — Liquid Glass Desktop</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- Design System + Modules -->
+    <link rel="stylesheet" href="./css/variables.css" />
+    <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./css/desktop.css" />
+    <link rel="stylesheet" href="./css/context-menu.css" />
+    <link rel="stylesheet" href="./css/dock.css" />
+  </head>
+  <body>
+    <!-- ============================================================= -->
+    <!-- WALLPAPER LAYER : animated liquid-glass gradient mesh          -->
+    <!-- ============================================================= -->
+    <div id="wallpaper" class="wallpaper" aria-hidden="true">
+      <span class="blob blob-1"></span>
+      <span class="blob blob-2"></span>
+      <span class="blob blob-3"></span>
+      <span class="blob blob-4"></span>
+      <div class="wallpaper-grain"></div>
+    </div>
+
+    <!-- ============================================================= -->
+    <!-- DESKTOP LAYER : icons, clock, selection marquee               -->
+    <!-- ============================================================= -->
+    <main id="desktop" class="desktop" role="application" aria-label="Desktop">
+      <!-- Desktop clock / date widget -->
+      <div class="desktop-widget" aria-hidden="true">
+        <div id="clock" class="desktop-clock">--:--</div>
+        <div id="date" class="desktop-date">Loading…</div>
+      </div>
+
+      <!-- Icon grid is injected by desktop.js -->
+      <div id="icon-layer" class="icon-layer"></div>
+
+      <!-- Rubber-band selection box -->
+      <div id="marquee" class="marquee" hidden></div>
+    </main>
+
+    <!-- ============================================================= -->
+    <!-- DOCK LAYER : floating glass dock + system tray                -->
+    <!-- ============================================================= -->
+    <footer id="dock-shell" class="dock-shell" aria-label="Dock">
+      <div class="dock">
+        <button class="dock-item" data-app="start" aria-label="Start Menu">
+          <i class="fa-solid fa-meteor"></i>
+          <span class="dock-tooltip">Start</span>
+          <span class="dock-indicator"></span>
+        </button>
+        <span class="dock-divider"></span>
+        <button class="dock-item" data-app="files" aria-label="File Explorer">
+          <i class="fa-solid fa-folder-open"></i>
+          <span class="dock-tooltip">Files</span>
+          <span class="dock-indicator"></span>
+        </button>
+        <button class="dock-item" data-app="browser" aria-label="Browser">
+          <i class="fa-solid fa-compass"></i>
+          <span class="dock-tooltip">Browser</span>
+          <span class="dock-indicator"></span>
+        </button>
+        <button class="dock-item" data-app="notepad" aria-label="Notepad">
+          <i class="fa-solid fa-pen-to-square"></i>
+          <span class="dock-tooltip">Notepad</span>
+          <span class="dock-indicator"></span>
+        </button>
+        <button class="dock-item" data-app="music" aria-label="Music Player">
+          <i class="fa-solid fa-music"></i>
+          <span class="dock-tooltip">Music</span>
+          <span class="dock-indicator"></span>
+        </button>
+        <button class="dock-item" data-app="calculator" aria-label="Calculator">
+          <i class="fa-solid fa-calculator"></i>
+          <span class="dock-tooltip">Calculator</span>
+          <span class="dock-indicator"></span>
+        </button>
+        <button class="dock-item" data-app="terminal" aria-label="Terminal">
+          <i class="fa-solid fa-terminal"></i>
+          <span class="dock-tooltip">Terminal</span>
+          <span class="dock-indicator"></span>
+        </button>
+        <button class="dock-item" data-app="settings" aria-label="Settings">
+          <i class="fa-solid fa-gear"></i>
+          <span class="dock-tooltip">Settings</span>
+          <span class="dock-indicator"></span>
+        </button>
+        <span class="dock-divider"></span>
+
+        <!-- System tray -->
+        <div class="dock-tray">
+          <button class="tray-btn" data-tray="search" aria-label="Search">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+          <button class="tray-btn" data-tray="theme" aria-label="Toggle theme">
+            <i class="fa-solid fa-moon"></i>
+          </button>
+          <button class="tray-btn tray-status" data-tray="center" aria-label="System status">
+            <i class="fa-solid fa-wifi"></i>
+            <i class="fa-solid fa-volume-high"></i>
+            <i class="fa-solid fa-battery-three-quarters"></i>
+          </button>
+          <div class="tray-clock">
+            <span id="tray-time">--:--</span>
+            <span id="tray-date">---</span>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Context menu template mount -->
+    <div id="context-menu" class="context-menu" hidden></div>
+
+    <!-- Notification stack -->
+    <div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+
+    <!-- ============================================================= -->
+    <!-- SCRIPTS (ES6 modules)                                          -->
+    <!-- ============================================================= -->
+    <script type="module" src="./js/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,128 @@
+/* =================================================================
+ * BASE : reset, typography, shared glass utilities, animations
+ * ================================================================= */
+
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text-1);
+  background: var(--bg-0);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  user-select: none;
+  transition: background var(--dur-slow) var(--ease-out),
+    color var(--dur-mid) var(--ease-out);
+}
+
+button {
+  font-family: inherit;
+  color: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+::selection { background: var(--accent-soft); }
+
+/* Custom scrollbars */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb {
+  background: var(--glass-border);
+  border-radius: var(--r-full);
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--text-3); background-clip: padding-box; }
+
+/* ---------------- Reusable glass surface ---------------- */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow-md), inset 0 1px 0 var(--glass-hi);
+  border-radius: var(--r-lg);
+}
+
+/* ---------------- Keyframes ---------------- */
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+
+@keyframes pop-in {
+  0% { opacity: 0; transform: scale(0.9) translateY(8px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes rise-in {
+  0% { opacity: 0; transform: translateY(18px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float-blob {
+  0%,100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(6%, -8%) scale(1.12); }
+  66% { transform: translate(-8%, 6%) scale(0.94); }
+}
+
+@keyframes ripple-out {
+  from { transform: scale(0); opacity: 0.5; }
+  to { transform: scale(2.6); opacity: 0; }
+}
+
+/* Ripple element (micro-interaction) */
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.35;
+  transform: scale(0);
+  animation: ripple-out 0.6s var(--ease-out);
+  pointer-events: none;
+}
+
+.u-hidden { display: none !important; }
+
+/* ---------------- Toast notifications ---------------- */
+.toast-stack {
+  position: fixed;
+  top: var(--sp-5);
+  right: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  z-index: 9000;
+  pointer-events: none;
+}
+
+.toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  min-width: 260px;
+  max-width: 340px;
+  padding: var(--sp-3) var(--sp-4);
+  color: var(--text-1);
+  animation: pop-in var(--dur-mid) var(--ease-elastic);
+  border-radius: var(--r-md);
+}
+.toast.leaving { animation: fade-in var(--dur-mid) reverse forwards; }
+.toast .toast-icon {
+  display: grid;
+  place-items: center;
+  width: 34px; height: 34px;
+  border-radius: var(--r-sm);
+  background: var(--accent-soft);
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.toast .toast-body { display: flex; flex-direction: column; gap: 2px; }
+.toast .toast-title { font-weight: 600; font-size: 14px; }
+.toast .toast-msg { font-size: 12.5px; color: var(--text-2); }
