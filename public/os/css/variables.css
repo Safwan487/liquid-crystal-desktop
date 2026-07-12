@@ -1,0 +1,108 @@
+/* =================================================================
+ * AURORA OS — DESIGN TOKENS
+ * Single source of truth for color, glass, depth, motion & spacing.
+ * Themed via [data-theme] and accent via [data-accent] on <html>.
+ * ================================================================= */
+
+:root {
+  /* ---- Typography ---- */
+  --font-display: "Sora", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+
+  /* ---- Radius scale ---- */
+  --r-sm: 10px;
+  --r-md: 16px;
+  --r-lg: 22px;
+  --r-xl: 30px;
+  --r-full: 999px;
+
+  /* ---- Spacing (HIG / MD3 inspired 4pt grid) ---- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+
+  /* ---- Motion : premium easing curves ---- */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-elastic: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --dur-fast: 0.16s;
+  --dur-mid: 0.28s;
+  --dur-slow: 0.5s;
+
+  /* ---- Accent palette (HSL channels so alpha is easy) ---- */
+  --accent-h: 265;
+  --accent-s: 84%;
+  --accent-l: 66%;
+  --accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+  --accent-soft: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.16);
+  --accent-glow: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.45);
+}
+
+/* ============================ DARK THEME ============================ */
+:root[data-theme="dark"] {
+  --bg-0: #05060c;
+  --bg-1: #0a0d18;
+
+  --text-1: hsl(220 30% 96%);
+  --text-2: hsl(220 16% 72%);
+  --text-3: hsl(220 12% 52%);
+
+  /* Glass surfaces */
+  --glass-bg: hsl(225 30% 14% / 0.55);
+  --glass-bg-strong: hsl(225 32% 12% / 0.78);
+  --glass-border: hsl(220 40% 100% / 0.14);
+  --glass-hi: hsl(220 60% 100% / 0.22); /* top reflection */
+  --glass-blur: 26px;
+
+  --shadow-sm: 0 4px 16px hsl(240 60% 2% / 0.4);
+  --shadow-md: 0 12px 40px hsl(240 60% 2% / 0.5);
+  --shadow-lg: 0 30px 80px hsl(240 60% 2% / 0.6);
+
+  --tray-time: var(--text-1);
+}
+
+/* ============================ LIGHT THEME ============================ */
+:root[data-theme="light"] {
+  --bg-0: #eef1f8;
+  --bg-1: #dfe5f2;
+
+  --text-1: hsl(225 40% 14%);
+  --text-2: hsl(225 18% 32%);
+  --text-3: hsl(225 12% 48%);
+
+  --glass-bg: hsl(0 0% 100% / 0.5);
+  --glass-bg-strong: hsl(0 0% 100% / 0.72);
+  --glass-border: hsl(0 0% 100% / 0.65);
+  --glass-hi: hsl(0 0% 100% / 0.85);
+  --glass-blur: 24px;
+
+  --shadow-sm: 0 4px 14px hsl(225 40% 40% / 0.14);
+  --shadow-md: 0 14px 40px hsl(225 40% 40% / 0.18);
+  --shadow-lg: 0 30px 70px hsl(225 40% 40% / 0.22);
+
+  --tray-time: var(--text-1);
+}
+
+/* ============================ ACCENTS ============================ */
+:root[data-accent="purple"] { --accent-h: 265; --accent-s: 84%; --accent-l: 66%; }
+:root[data-accent="blue"]   { --accent-h: 214; --accent-s: 90%; --accent-l: 60%; }
+:root[data-accent="green"]  { --accent-h: 152; --accent-s: 62%; --accent-l: 48%; }
+:root[data-accent="orange"] { --accent-h: 26;  --accent-s: 92%; --accent-l: 56%; }
+:root[data-accent="pink"]   { --accent-h: 328; --accent-s: 82%; --accent-l: 64%; }
+:root[data-accent="red"]    { --accent-h: 2;   --accent-s: 82%; --accent-l: 60%; }
+
+/* Recompute derived accent tokens whenever channels change */
+:root {
+  --accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+  --accent-soft: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.16);
+  --accent-glow: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.5);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
