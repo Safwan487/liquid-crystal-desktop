@@ -1,0 +1,119 @@
+/* =================================================================
+ * DOCK : floating glass dock, tooltips, running indicators, tray
+ * ================================================================= */
+
+.dock-shell {
+  position: fixed;
+  left: 50%;
+  bottom: var(--sp-4);
+  transform: translateX(-50%);
+  z-index: 6000;
+  animation: rise-in var(--dur-slow) var(--ease-out);
+}
+
+.dock {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(var(--glass-blur)) saturate(190%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 var(--glass-hi);
+}
+
+.dock-item {
+  position: relative;
+  width: 52px; height: 52px;
+  display: grid; place-items: center;
+  font-size: 22px;
+  color: var(--text-1);
+  border-radius: var(--r-md);
+  overflow: visible;
+  transition: transform var(--dur-mid) var(--ease-elastic),
+    background var(--dur-fast) var(--ease-out);
+}
+.dock-item:hover {
+  transform: translateY(-10px) scale(1.14);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.dock-item:active { transform: translateY(-4px) scale(1.04); }
+
+/* Magnify neighbours slightly */
+.dock-item:hover + .dock-item,
+.dock-item:has(+ .dock-item:hover) { transform: translateY(-4px) scale(1.06); }
+
+.dock-tooltip {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 50%;
+  transform: translateX(-50%) translateY(6px);
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--text-1);
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-sm);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+.dock-item:hover .dock-tooltip { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.dock-indicator {
+  position: absolute;
+  bottom: -3px;
+  left: 50%;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: translateX(-50%) scale(0);
+  transition: transform var(--dur-mid) var(--ease-elastic);
+}
+.dock-item.running .dock-indicator { transform: translateX(-50%) scale(1); }
+
+.dock-divider {
+  width: 1px; height: 32px;
+  margin: 0 var(--sp-1);
+  background: var(--glass-border);
+}
+
+/* ---------------- System tray ---------------- */
+.dock-tray { display: flex; align-items: center; gap: var(--sp-2); padding-left: var(--sp-1); }
+
+.tray-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 8px 10px;
+  font-size: 14px;
+  color: var(--text-2);
+  border-radius: var(--r-sm);
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.tray-btn:hover { background: var(--accent-soft); color: var(--accent); }
+.tray-status { gap: 8px; }
+
+.tray-clock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  line-height: 1.15;
+  padding: 0 var(--sp-2) 0 var(--sp-1);
+  min-width: 58px;
+}
+.tray-clock #tray-time { font-size: 13px; font-weight: 600; color: var(--tray-time); }
+.tray-clock #tray-date { font-size: 11px; color: var(--text-3); }
+
+/* Tablet mode : shrink dock */
+@media (max-width: 1024px) {
+  .dock-item { width: 46px; height: 46px; font-size: 19px; }
+  .tray-clock { display: none; }
+}
+@media (max-width: 720px) {
+  .dock-tray .tray-status { display: none; }
+}
