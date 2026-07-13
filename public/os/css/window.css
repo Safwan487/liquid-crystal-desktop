@@ -1,0 +1,163 @@
+/* =================================================================
+ * WINDOW MANAGER : glass windows, titlebar, controls, resize,
+ *                  snap zones, minimize / maximize / restore
+ * ================================================================= */
+
+/* ---------------- Window shell ---------------- */
+.window {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  min-width: 320px;
+  min-height: 220px;
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(var(--glass-blur)) saturate(185%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-md), inset 0 1px 0 var(--glass-hi);
+  overflow: hidden;
+  will-change: transform, width, height, opacity;
+  transition: box-shadow var(--dur-mid) var(--ease-out);
+}
+
+.window.focused {
+  box-shadow: var(--shadow-lg), 0 0 0 1px var(--accent-soft),
+    inset 0 1px 0 var(--glass-hi);
+  border-color: hsl(var(--accent-h) var(--accent-s) var(--accent-l) / 0.35);
+}
+
+/* Open / close animations */
+.window.opening { animation: win-open var(--dur-mid) var(--ease-elastic); }
+.window.closing { animation: win-close var(--dur-fast) var(--ease-in-out) forwards; }
+.window.minimizing { animation: win-min var(--dur-mid) var(--ease-in-out) forwards; }
+
+@keyframes win-open {
+  0% { opacity: 0; transform: scale(0.9) translateY(16px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+@keyframes win-close {
+  0% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(0.92); }
+}
+@keyframes win-min {
+  0% { opacity: 1; transform: scale(1) translateY(0); }
+  100% { opacity: 0; transform: scale(0.5) translateY(60vh); }
+}
+
+/* While dragging / resizing, drop transitions for snappy feel */
+.window.dragging, .window.resizing { transition: none; user-select: none; }
+.window.snapping { transition: top var(--dur-mid) var(--ease-out),
+  left var(--dur-mid) var(--ease-out), width var(--dur-mid) var(--ease-out),
+  height var(--dur-mid) var(--ease-out); }
+
+/* Maximized state fills workspace above the dock */
+.window.maximized {
+  border-radius: 0;
+  border-color: transparent;
+}
+
+/* ---------------- Titlebar ---------------- */
+.window-titlebar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  height: 46px;
+  padding: 0 var(--sp-3) 0 var(--sp-4);
+  flex-shrink: 0;
+  cursor: grab;
+  background: linear-gradient(var(--glass-hi), transparent);
+  border-bottom: 1px solid var(--glass-border);
+}
+.window.dragging .window-titlebar { cursor: grabbing; }
+
+.window-title {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  font-family: var(--font-display);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-1);
+  pointer-events: none;
+  flex: 1;
+  min-width: 0;
+}
+.window-title i { color: var(--accent); font-size: 15px; }
+.window-title span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Traffic-light controls */
+.window-controls { display: flex; align-items: center; gap: var(--sp-2); }
+.win-btn {
+  width: 26px; height: 26px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  font-size: 10px;
+  color: transparent;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out);
+}
+.win-btn i { pointer-events: none; }
+.win-btn.min { background: hsl(45 90% 55%); }
+.win-btn.max { background: hsl(140 60% 48%); }
+.win-btn.close { background: hsl(2 82% 62%); }
+.window-controls:hover .win-btn { color: hsl(240 40% 12% / 0.7); }
+.win-btn:hover { filter: brightness(1.12); transform: scale(1.08); }
+
+/* ---------------- Body ---------------- */
+.window-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
+  color: var(--text-1);
+}
+
+/* Placeholder content shown until Phase 4 apps land */
+.window-placeholder {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-4);
+  text-align: center;
+  padding: var(--sp-6);
+}
+.window-placeholder .ph-glyph {
+  width: 84px; height: 84px;
+  display: grid; place-items: center;
+  font-size: 36px;
+  border-radius: var(--r-lg);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.window-placeholder h2 { font-family: var(--font-display); font-size: 20px; font-weight: 600; }
+.window-placeholder p { max-width: 340px; font-size: 13.5px; color: var(--text-2); line-height: 1.5; }
+
+/* ---------------- Resize handles ---------------- */
+.win-resize { position: absolute; z-index: 5; }
+.win-resize.n  { top: -3px; left: 10px; right: 10px; height: 8px; cursor: ns-resize; }
+.win-resize.s  { bottom: -3px; left: 10px; right: 10px; height: 8px; cursor: ns-resize; }
+.win-resize.e  { top: 10px; bottom: 10px; right: -3px; width: 8px; cursor: ew-resize; }
+.win-resize.w  { top: 10px; bottom: 10px; left: -3px; width: 8px; cursor: ew-resize; }
+.win-resize.ne { top: -4px; right: -4px; width: 16px; height: 16px; cursor: nesw-resize; }
+.win-resize.nw { top: -4px; left: -4px; width: 16px; height: 16px; cursor: nwse-resize; }
+.win-resize.se { bottom: -4px; right: -4px; width: 16px; height: 16px; cursor: nwse-resize; }
+.win-resize.sw { bottom: -4px; left: -4px; width: 16px; height: 16px; cursor: nesw-resize; }
+.window.maximized .win-resize { display: none; }
+
+/* ---------------- Snap preview overlay ---------------- */
+.snap-preview {
+  position: fixed;
+  z-index: 5500;
+  pointer-events: none;
+  background: var(--accent-soft);
+  border: 2px solid var(--accent);
+  border-radius: var(--r-lg);
+  box-shadow: 0 0 40px var(--accent-glow);
+  opacity: 0;
+  transform: scale(0.98);
+  transition: all var(--dur-fast) var(--ease-out);
+}
+.snap-preview.show { opacity: 1; transform: scale(1); }
