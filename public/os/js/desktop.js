@@ -129,11 +129,6 @@ function attachIconBehaviour(node, data) {
 /** Open an icon — real windows arrive in Phase 2; announce for now. */
 function openIcon(data) {
   emit("app:launch", { app: data.app, id: data.id, name: data.name });
-  if (data.kind === "folder") {
-    notify(data.name, "Folder opening arrives with the window manager.", "info");
-  } else {
-    notify(data.name, "Launching… (window manager lands in Phase 2)", "info");
-  }
 }
 
 /* ---------------- Rename ---------------- */

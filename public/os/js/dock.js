@@ -1,9 +1,20 @@
 /* =================================================================
- * DOCK : app launch buttons, running indicators, tray actions
+ * DOCK : app launch buttons, running indicators, tray actions.
+ * Now wired to the window manager — clicking toggles windows.
  * ================================================================= */
 import { $, $$, ripple, emit, on } from "./utils.js";
 import { toggleTheme } from "./theme.js";
 import { notify } from "./notifications.js";
+import { openWindow, getWindow, minimizeWindow, restoreWindow } from "./window.js";
+
+function setRunning(app, running) {
+  const btn = $(`.dock-item[data-app="${app}"]`);
+  btn?.classList.toggle("running", running);
+}
+function setActive(app, active) {
+  const btn = $(`.dock-item[data-app="${app}"]`);
+  btn?.classList.toggle("active", active);
+}
 
 export function initDock() {
   // App icons
@@ -16,11 +27,17 @@ export function initDock() {
         notify("Start Menu", "Arrives in Phase 3.", "info", 2000);
         return;
       }
-      // Mark as running (visual) — real windows arrive Phase 2
-      btn.classList.add("running");
-      emit("app:launch", { app, name: btn.querySelector(".dock-tooltip")?.textContent });
-      notify(btn.querySelector(".dock-tooltip")?.textContent || app,
-        "Launching… (window manager lands in Phase 2)", "info");
+      // Toggle behaviour: open → focus → minimize / restore.
+      const rec = getWindow(app);
+      if (!rec) {
+        openWindow({ app, name: btn.querySelector(".dock-tooltip")?.textContent });
+      } else if (rec.minimized) {
+        restoreWindow(rec);
+      } else if (rec.node.classList.contains("focused")) {
+        minimizeWindow(rec);
+      } else {
+        restoreWindow(rec);
+      }
     });
   });
 
@@ -35,9 +52,9 @@ export function initDock() {
     });
   });
 
-  // Sync running indicators when apps close (future phases dispatch this)
-  on("app:closed", (e) => {
-    const btn = $(`.dock-item[data-app="${e.detail?.app}"]`);
-    btn?.classList.remove("running");
-  });
+  // Sync running / active indicators with the window manager.
+  on("window:open", (e) => { setRunning(e.detail.app, true); setActive(e.detail.app, true); });
+  on("window:closed", (e) => { setRunning(e.detail.app, false); setActive(e.detail.app, false); });
+  on("window:minimized", (e) => setActive(e.detail.app, false));
+  on("window:restored", (e) => setActive(e.detail.app, true));
 }
