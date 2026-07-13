@@ -77,6 +77,8 @@
   transition: transform var(--dur-mid) var(--ease-elastic);
 }
 .dock-item.running .dock-indicator { transform: translateX(-50%) scale(1); }
+.dock-item.active .dock-indicator { width: 16px; border-radius: var(--r-full); }
+.dock-item.running { background: var(--accent-soft); color: var(--accent); }
 
 .dock-divider {
   width: 1px; height: 32px;
