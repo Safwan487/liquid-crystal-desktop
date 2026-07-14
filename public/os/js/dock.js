@@ -24,7 +24,6 @@ export function initDock() {
       const app = btn.dataset.app;
       if (app === "start") {
         emit("start:toggle");
-        notify("Start Menu", "Arrives in Phase 3.", "info", 2000);
         return;
       }
       // Toggle behaviour: open → focus → minimize / restore.
