@@ -1,0 +1,236 @@
+/* =================================================================
+ * START MENU : searchable app launcher with pinned + recents,
+ *              power actions, keyboard navigation
+ * ================================================================= */
+
+.start-scrim {
+  position: fixed; inset: 0;
+  z-index: 6500;
+  background: transparent;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-mid) var(--ease-out);
+}
+.start-scrim.open { opacity: 1; pointer-events: auto; }
+
+.start-menu {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--sp-4) + 68px);
+  transform: translate(-50%, 24px) scale(0.96);
+  width: min(720px, calc(100vw - 32px));
+  max-height: min(640px, calc(100vh - 140px));
+  display: flex;
+  flex-direction: column;
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(var(--glass-blur)) saturate(190%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow-lg), inset 0 1px 0 var(--glass-hi);
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: 50% 100%;
+  transition:
+    transform var(--dur-mid) var(--ease-elastic),
+    opacity var(--dur-mid) var(--ease-out);
+  overflow: hidden;
+  z-index: 6600;
+}
+.start-scrim.open .start-menu {
+  transform: translate(-50%, 0) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ---------------- Search bar ---------------- */
+.start-search {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-4) var(--sp-5);
+  border-bottom: 1px solid var(--glass-border);
+  background: linear-gradient(var(--glass-hi), transparent);
+}
+.start-search i {
+  color: var(--accent);
+  font-size: 16px;
+}
+.start-search input {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  outline: none;
+  font-family: var(--font-body);
+  font-size: 15px;
+  color: var(--text-1);
+  min-width: 0;
+}
+.start-search input::placeholder { color: var(--text-3); }
+.start-search kbd {
+  font-family: var(--font-body);
+  font-size: 11px;
+  color: var(--text-3);
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+}
+
+/* ---------------- Body ---------------- */
+.start-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-5);
+}
+
+.start-section-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: var(--sp-3);
+}
+
+.start-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: var(--sp-3);
+}
+
+.start-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: var(--sp-3) 6px;
+  border-radius: var(--r-md);
+  color: var(--text-1);
+  background: transparent;
+  border: 1px solid transparent;
+  transition:
+    transform var(--dur-fast) var(--ease-elastic),
+    background var(--dur-fast) var(--ease-out),
+    border-color var(--dur-fast) var(--ease-out);
+  cursor: pointer;
+  outline: none;
+}
+.start-tile:hover,
+.start-tile.active {
+  background: var(--accent-soft);
+  border-color: var(--glass-border);
+  transform: translateY(-2px);
+}
+.start-tile:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.start-tile .tile-glyph {
+  width: 46px; height: 46px;
+  display: grid; place-items: center;
+  border-radius: var(--r-md);
+  font-size: 20px;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--glass-border);
+}
+.start-tile .tile-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-1);
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Recents = horizontal chip list */
+.start-recents {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+.start-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 8px;
+  border-radius: var(--r-full);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-1);
+  font-size: 12.5px;
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.start-chip:hover { background: var(--accent-soft); color: var(--accent); transform: translateY(-1px); }
+.start-chip i { font-size: 13px; }
+
+/* Empty / no-results state */
+.start-empty {
+  padding: var(--sp-6) var(--sp-4);
+  text-align: center;
+  color: var(--text-3);
+  font-size: 13px;
+}
+.start-empty i { display: block; font-size: 26px; margin-bottom: var(--sp-2); color: var(--text-3); }
+
+/* ---------------- Footer / user + power ---------------- */
+.start-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-3) var(--sp-4);
+  border-top: 1px solid var(--glass-border);
+  background: linear-gradient(transparent, var(--glass-hi));
+}
+.start-user {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: 4px 8px;
+  border-radius: var(--r-full);
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.start-user:hover { background: var(--accent-soft); }
+.start-avatar {
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), hsl(var(--accent-h) 90% 40%));
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 14px var(--accent-glow);
+}
+.start-user .u-meta { display: flex; flex-direction: column; line-height: 1.1; }
+.start-user .u-name { font-size: 13px; font-weight: 600; color: var(--text-1); }
+.start-user .u-role { font-size: 11px; color: var(--text-3); }
+
+.start-power { display: flex; gap: var(--sp-1); }
+.power-btn {
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  border-radius: var(--r-full);
+  color: var(--text-2);
+  font-size: 14px;
+  background: transparent;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.power-btn:hover { background: var(--accent-soft); color: var(--accent); transform: translateY(-1px); }
+.power-btn.danger:hover { background: hsl(2 80% 60% / 0.18); color: hsl(2 80% 62%); }
+
+/* Active-state indicator on dock's start button when menu is open */
+.dock-item[data-app="start"].active { background: var(--accent-soft); color: var(--accent); }
+
+/* Responsive */
+@media (max-width: 720px) {
+  .start-menu { width: calc(100vw - 16px); bottom: 88px; max-height: calc(100vh - 120px); }
+  .start-grid { grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); }
+}
