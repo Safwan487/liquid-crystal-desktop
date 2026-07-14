@@ -207,7 +207,7 @@
 .st-seg-btn { padding: 6px 14px; border: 0; background: transparent; cursor: pointer; border-radius: 8px; font-size: 12px; text-transform: capitalize; }
 .st-seg-btn.on { background: hsl(var(--accent-h) var(--accent-s) var(--accent-l)); color: #fff; }
 .st-swatches { display: flex; gap: 8px; }
-.st-swatch { width: 28px; height: 28px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; background: var(--sw); }
+.st-swatch { width: 28px; height: 28px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; }
 .st-swatch.active { border-color: hsl(var(--text)); box-shadow: 0 0 0 2px hsl(var(--surface-1)); }
 .st-walls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 .st-wall { background: transparent; border: 0; padding: 0; cursor: pointer; }
