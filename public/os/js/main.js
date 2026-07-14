@@ -6,6 +6,7 @@ import { initClock } from "./clock.js";
 import { initDesktop } from "./desktop.js";
 import { initDock } from "./dock.js";
 import { initWindows } from "./window.js";
+import { initStartMenu } from "./start-menu.js";
 import { notify } from "./notifications.js";
 
 function boot() {
@@ -13,6 +14,7 @@ function boot() {
   initClock();     // desktop + tray clock
   initDesktop();   // icons, selection, drag, context menus
   initWindows();   // window manager (drag, resize, snap, min/max)
+  initStartMenu(); // searchable start menu + power actions
   initDock();      // dock + tray interactions
 
   // Welcome notification
