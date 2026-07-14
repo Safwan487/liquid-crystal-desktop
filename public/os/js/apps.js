@@ -4,6 +4,14 @@
  * with a themed placeholder body.
  * ================================================================= */
 import { el } from "./utils.js";
+import { buildFiles }      from "./apps/files.js";
+import { buildBrowser }    from "./apps/browser.js";
+import { buildNotepad }    from "./apps/notepad.js";
+import { buildGallery }    from "./apps/gallery.js";
+import { buildMusic }      from "./apps/music.js";
+import { buildCalculator } from "./apps/calculator.js";
+import { buildTerminal }   from "./apps/terminal.js";
+import { buildSettings }   from "./apps/settings.js";
 
 export const APPS = {
   files:      { title: "Files",       icon: "fa-folder-open",    w: 780, h: 520 },
@@ -15,6 +23,24 @@ export const APPS = {
   terminal:   { title: "Terminal",    icon: "fa-terminal",       w: 720, h: 460 },
   settings:   { title: "Settings",    icon: "fa-gear",           w: 760, h: 560 },
 };
+
+/** Real app builders. Each returns the body DOM node for the window. */
+const BUILDERS = {
+  files:      buildFiles,
+  browser:    buildBrowser,
+  notepad:    buildNotepad,
+  gallery:    buildGallery,
+  music:      buildMusic,
+  calculator: buildCalculator,
+  terminal:   buildTerminal,
+  settings:   buildSettings,
+};
+
+/** Build the app body. Falls back to placeholder for unknown apps. */
+export function appBody(app, name) {
+  const build = BUILDERS[app];
+  return build ? build() : placeholderBody(app, name);
+}
 
 /** Fallback metadata for unknown / folder launches. */
 export function appMeta(app) {

@@ -47,6 +47,15 @@
   --bg-0: #05060c;
   --bg-1: #0a0d18;
 
+  /* Surface tokens (H S% L% channels — used with hsl(var(--surface) / a)) */
+  --surface-1: 225 30% 14%;
+  --surface-2: 225 26% 18%;
+  --surface-3: 225 22% 24%;
+  --surface-4: 225 20% 32%;
+  --border: 220 40% 100% / 0.14;
+  --text: 220 30% 96%;
+  --text-muted: 220 12% 62%;
+
   --text-1: hsl(220 30% 96%);
   --text-2: hsl(220 16% 72%);
   --text-3: hsl(220 12% 52%);
@@ -69,6 +78,14 @@
 :root[data-theme="light"] {
   --bg-0: #eef1f8;
   --bg-1: #dfe5f2;
+
+  --surface-1: 0 0% 100%;
+  --surface-2: 220 24% 96%;
+  --surface-3: 220 20% 90%;
+  --surface-4: 220 18% 82%;
+  --border: 220 30% 20% / 0.12;
+  --text: 225 40% 14%;
+  --text-muted: 225 12% 44%;
 
   --text-1: hsl(225 40% 14%);
   --text-2: hsl(225 18% 32%);
@@ -94,6 +111,16 @@
 :root[data-accent="orange"] { --accent-h: 26;  --accent-s: 92%; --accent-l: 56%; }
 :root[data-accent="pink"]   { --accent-h: 328; --accent-s: 82%; --accent-l: 64%; }
 :root[data-accent="red"]    { --accent-h: 2;   --accent-s: 82%; --accent-l: 60%; }
+
+/* Accent triples for swatches (H S% L% — safe for hsl(var(--accent-*))) */
+:root {
+  --accent-purple: 265 84% 66%;
+  --accent-blue:   214 90% 60%;
+  --accent-green:  152 62% 48%;
+  --accent-orange: 26  92% 56%;
+  --accent-pink:   328 82% 64%;
+  --accent-red:    2   82% 60%;
+}
 
 /* Recompute derived accent tokens whenever channels change */
 :root {

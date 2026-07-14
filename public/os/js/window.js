@@ -4,7 +4,7 @@
  *                  restore, animated open / close.
  * ================================================================= */
 import { $, el, clamp, emit, on } from "./utils.js";
-import { appMeta, placeholderBody } from "./apps.js";
+import { appMeta, appBody } from "./apps.js";
 
 const desktop = $("#desktop");
 const MIN_W = 320;
@@ -90,7 +90,7 @@ export function openWindow({ app, name, body }) {
         winBtn("close", "fa-xmark"),
       ]),
     ]),
-    el("div", { class: "window-body" }, [body || placeholderBody(app, title)]),
+    el("div", { class: "window-body" }, [body || appBody(app, title)]),
     ...["n", "s", "e", "w", "ne", "nw", "se", "sw"].map((dir) =>
       el("div", { class: `win-resize ${dir}`, dataset: { dir } })),
   ]);
