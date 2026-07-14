@@ -23,7 +23,13 @@ export function buildSettings() {
 
   function swatchRow() {
     return el("div", { class: "st-swatches" },
-      ACCENTS.map(a => el("button", { class: `st-swatch swatch ${a===getAccent()?"active":""}`, dataset: { accent: a }, onclick: () => { setAccent(a); render(); }, style: `--sw: var(--accent-${a})` })));
+      ACCENTS.map(a => el("button", {
+        class: `st-swatch swatch ${a===getAccent()?"active":""}`,
+        dataset: { accent: a },
+        title: a,
+        onclick: () => { setAccent(a); render(); },
+        style: `background: hsl(var(--accent-${a}))`,
+      })));
   }
 
   function renderPane() {
