@@ -4,7 +4,6 @@
  * ================================================================= */
 import { $, $$, ripple, emit, on } from "./utils.js";
 import { toggleTheme } from "./theme.js";
-import { notify } from "./notifications.js";
 import { openWindow, getWindow, minimizeWindow, restoreWindow } from "./window.js";
 
 function setRunning(app, running) {
@@ -46,8 +45,8 @@ export function initDock() {
       ripple(e, btn);
       const kind = btn.dataset.tray;
       if (kind === "theme") toggleTheme();
-      else if (kind === "search") { emit("search:toggle"); notify("Search", "Arrives in a later phase.", "info", 2000); }
-      else if (kind === "center") { emit("center:toggle"); notify("Notification Center", "Arrives in a later phase.", "info", 2000); }
+      else if (kind === "search") emit("search:toggle");
+      else if (kind === "center") emit("center:toggle");
     });
   });
 

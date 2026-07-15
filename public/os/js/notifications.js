@@ -1,7 +1,8 @@
 /* =================================================================
- * NOTIFICATIONS : transient glass toasts
+ * NOTIFICATIONS : transient glass toasts + persistent history
+ * that feeds the Notification Center panel.
  * ================================================================= */
-import { $, el } from "./utils.js";
+import { $, el, emit, store } from "./utils.js";
 
 const ICONS = {
   info: "fa-circle-info",
@@ -9,6 +10,27 @@ const ICONS = {
   warning: "fa-triangle-exclamation",
   error: "fa-circle-xmark",
 };
+
+const MAX_HISTORY = 30;
+let history = [];
+
+/** Restore persisted history (called by main). */
+export function initNotifications() {
+  history = store.get("notifications", []).slice(0, MAX_HISTORY);
+  emit("notifications:change", { history });
+}
+
+export function getNotifications() { return history.slice(); }
+export function clearNotifications() {
+  history = [];
+  store.set("notifications", history);
+  emit("notifications:change", { history });
+}
+export function dismissNotification(id) {
+  history = history.filter((n) => n.id !== id);
+  store.set("notifications", history);
+  emit("notifications:change", { history });
+}
 
 /**
  * Show a glass toast notification.
@@ -19,6 +41,11 @@ const ICONS = {
  */
 export function notify(title, msg = "", type = "info", ttl = 3600) {
   const stack = $("#toast-stack");
+  // Record in history even if the stack is not mounted yet.
+  const entry = { id: Date.now() + Math.random(), title, msg, type, ts: Date.now() };
+  history = [entry, ...history].slice(0, MAX_HISTORY);
+  store.set("notifications", history);
+  emit("notifications:change", { history, added: entry });
   if (!stack) return;
 
   const toast = el("div", { class: "toast glass", role: "status" }, [
