@@ -155,7 +155,10 @@ export function initNotificationCenter() {
 
   // Sliders
   volSlider = el("input", { type: "range", min: "0", max: "100", value: state.volume });
-  volSlider.addEventListener("input", () => { state.volume = +volSlider.value; volVal.textContent = state.volume; persist(); });
+  volSlider.addEventListener("input", () => {
+    state.volume = +volSlider.value; volVal.textContent = state.volume; persist();
+    emit("nc:volume", state.volume);
+  });
   volVal = el("span", { class: "val" }, String(state.volume));
   const volRow = el("div", { class: "nc-slider" }, [
     el("i", { class: "fa-solid fa-volume-high" }), volSlider, volVal,
