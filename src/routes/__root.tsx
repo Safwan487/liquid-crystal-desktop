@@ -88,11 +88,15 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "A premium futuristic liquid-glass desktop environment with floating windows, glass dock and dynamic themes.",
+          "Aurora OS is a premium, futuristic liquid-glass desktop environment built with pure HTML, CSS and vanilla JavaScript.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Aurora OS — Liquid Glass Desktop Environment" },
+      { name: "twitter:description", content: "Aurora OS is a premium, futuristic liquid-glass desktop environment built with pure HTML, CSS and vanilla JavaScript." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/beffb8fe-ab33-4468-8b71-048ceb3e003e" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/beffb8fe-ab33-4468-8b71-048ceb3e003e" },
     ],
     links: [
       {
