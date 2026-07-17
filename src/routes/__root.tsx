@@ -95,8 +95,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "Aurora OS — Liquid Glass Desktop Environment" },
       { name: "twitter:description", content: "Aurora OS is a premium, futuristic liquid-glass desktop environment built with pure HTML, CSS and vanilla JavaScript." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/beffb8fe-ab33-4468-8b71-048ceb3e003e" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/beffb8fe-ab33-4468-8b71-048ceb3e003e" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/1fd5054f-9b23-47c6-9710-27f45adb6c78" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/1fd5054f-9b23-47c6-9710-27f45adb6c78" },
     ],
     links: [
       {
