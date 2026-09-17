@@ -37,4 +37,5 @@ export function getAccent() { return root.dataset.accent; }
 export function initTheme() {
   setTheme(store.get("theme", "dark"));
   setAccent(store.get("accent", "purple"));
+  document.documentElement.dataset.wallpaper = store.get("wallpaper", "aurora");
 }
