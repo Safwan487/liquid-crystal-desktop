@@ -214,6 +214,14 @@
 .st-wall-preview { height: 90px; border-radius: 12px; border: 2px solid transparent; background: linear-gradient(135deg, hsl(var(--accent-h) var(--accent-s) 60%), hsl(220 80% 40%)); }
 .st-wall.on .st-wall-preview { border-color: hsl(var(--accent-h) var(--accent-s) 60%); }
 .st-wall span { display: block; font-size: 12px; margin-top: 6px; text-transform: capitalize; }
+
+/* Per-wallpaper preview thumbnails (match the desktop variants) */
+.st-wall-preview.wp-aurora  { background: linear-gradient(135deg, hsl(265 85% 60%), hsl(220 85% 55%), hsl(300 80% 58%)); }
+.st-wall-preview.wp-nebula  { background: linear-gradient(135deg, hsl(300 90% 62%), hsl(250 85% 50%), hsl(320 80% 55%)); }
+.st-wall-preview.wp-prism   { background: linear-gradient(135deg, hsl(0 85% 60%), hsl(120 75% 55%), hsl(200 90% 58%), hsl(280 85% 62%)); }
+.st-wall-preview.wp-glacier { background: linear-gradient(135deg, hsl(190 90% 60%), hsl(215 85% 58%), hsl(175 80% 55%)); }
+.st-wall-preview.wp-dune    { background: linear-gradient(135deg, hsl(40 90% 58%), hsl(25 85% 52%), hsl(50 80% 60%)); }
+.st-wall-preview.wp-ember   { background: linear-gradient(135deg, hsl(15 90% 55%), hsl(350 85% 52%), hsl(35 90% 55%)); }
 .st-danger { padding: 8px 16px; border-radius: 8px; background: hsl(0 70% 55%); color: #fff; border: 0; cursor: pointer; font-weight: 500; }
 .st-about { text-align: center; padding: 24px; }
 .st-logo { width: 72px; height: 72px; border-radius: 20px; background: linear-gradient(135deg, hsl(var(--accent-h) var(--accent-s) 60%), hsl(var(--accent-h) var(--accent-s) 40%)); display: grid; place-items: center; margin: 0 auto 16px; font-size: 30px; color: #fff; }

@@ -30,6 +30,56 @@
 .blob-3 { top: 30%; right: 20%;   background: hsl(calc(var(--accent-h) - 50) 80% 60%); animation-delay: -12s; }
 .blob-4 { bottom: 12%; left: 24%; background: hsl(calc(var(--accent-h) + 90) 80% 62%); animation-delay: -18s; }
 
+/* ---------------- Wallpaper variants (Settings picker) ----------------
+ * "aurora" is the default accent-driven look above; the rest override
+ * the base gradient and blob hues. */
+:root[data-wallpaper="nebula"] .wallpaper {
+  background: radial-gradient(120% 120% at 15% 10%, hsl(270 60% 18%), hsl(250 55% 7%) 60%);
+}
+:root[data-wallpaper="nebula"] .blob-1 { background: hsl(300 90% 62%); }
+:root[data-wallpaper="nebula"] .blob-2 { background: hsl(265 85% 58%); }
+:root[data-wallpaper="nebula"] .blob-3 { background: hsl(320 80% 60%); }
+:root[data-wallpaper="nebula"] .blob-4 { background: hsl(230 85% 62%); }
+
+:root[data-wallpaper="prism"] .wallpaper {
+  background: radial-gradient(120% 120% at 15% 10%, hsl(220 45% 16%), hsl(240 40% 8%) 60%);
+}
+:root[data-wallpaper="prism"] .blob-1 { background: hsl(0 85% 60%); }
+:root[data-wallpaper="prism"] .blob-2 { background: hsl(120 75% 55%); }
+:root[data-wallpaper="prism"] .blob-3 { background: hsl(200 90% 58%); }
+:root[data-wallpaper="prism"] .blob-4 { background: hsl(280 85% 62%); }
+
+:root[data-wallpaper="glacier"] .wallpaper {
+  background: radial-gradient(120% 120% at 15% 10%, hsl(205 60% 20%), hsl(215 55% 8%) 60%);
+}
+:root[data-wallpaper="glacier"] .blob-1 { background: hsl(190 90% 60%); }
+:root[data-wallpaper="glacier"] .blob-2 { background: hsl(210 85% 62%); }
+:root[data-wallpaper="glacier"] .blob-3 { background: hsl(175 80% 55%); }
+:root[data-wallpaper="glacier"] .blob-4 { background: hsl(225 85% 65%); }
+
+:root[data-wallpaper="dune"] .wallpaper {
+  background: radial-gradient(120% 120% at 15% 10%, hsl(35 50% 18%), hsl(25 45% 8%) 60%);
+}
+:root[data-wallpaper="dune"] .blob-1 { background: hsl(40 90% 58%); }
+:root[data-wallpaper="dune"] .blob-2 { background: hsl(25 85% 55%); }
+:root[data-wallpaper="dune"] .blob-3 { background: hsl(50 80% 60%); }
+:root[data-wallpaper="dune"] .blob-4 { background: hsl(15 80% 58%); }
+
+:root[data-wallpaper="ember"] .wallpaper {
+  background: radial-gradient(120% 120% at 15% 10%, hsl(10 55% 16%), hsl(0 50% 7%) 60%);
+}
+:root[data-wallpaper="ember"] .blob-1 { background: hsl(15 90% 55%); }
+:root[data-wallpaper="ember"] .blob-2 { background: hsl(350 85% 55%); }
+:root[data-wallpaper="ember"] .blob-3 { background: hsl(35 90% 55%); }
+:root[data-wallpaper="ember"] .blob-4 { background: hsl(340 80% 50%); }
+
+/* Light theme: soften variant gradients */
+:root[data-theme="light"][data-wallpaper="nebula"] .wallpaper { background: radial-gradient(120% 120% at 15% 10%, hsl(280 70% 88%), hsl(260 60% 78%) 60%); }
+:root[data-theme="light"][data-wallpaper="prism"] .wallpaper  { background: radial-gradient(120% 120% at 15% 10%, hsl(220 70% 90%), hsl(250 60% 80%) 60%); }
+:root[data-theme="light"][data-wallpaper="glacier"] .wallpaper { background: radial-gradient(120% 120% at 15% 10%, hsl(200 75% 90%), hsl(215 65% 80%) 60%); }
+:root[data-theme="light"][data-wallpaper="dune"] .wallpaper   { background: radial-gradient(120% 120% at 15% 10%, hsl(40 80% 88%), hsl(30 65% 78%) 60%); }
+:root[data-theme="light"][data-wallpaper="ember"] .wallpaper  { background: radial-gradient(120% 120% at 15% 10%, hsl(15 80% 88%), hsl(350 65% 78%) 60%); }
+
 .wallpaper-grain {
   position: absolute;
   inset: 0;
